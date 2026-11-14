@@ -4,7 +4,6 @@
 
 ### A lightweight, dependency-free ELO rating library for Java, with support for score-based rating updates
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Dependencies](https://img.shields.io/badge/dependencies-none-brightgreen?style=flat-square)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue?style=flat-square)
@@ -29,40 +28,23 @@ This project goes one step beyond the original system: it can also factor in **p
 - ♟️ **Classic ELO:** updates ratings from the match outcome (win, loss, or draw)
 - 🎯 **Score-aware updates:** three selectable methods that account for points scored
 - ⚙️ **Fully configurable:** tune the K factor, the scale constant `c`, and the bonus factor `L` per league or competition
-- 🐍☕ **Python and Java:** identical API in both languages
-- 📦 **Zero dependencies:** no external libraries in either implementation
+- 📦 **Zero dependencies:** plain Java, no external libraries
 
 ## 🚀 Quick Start
-
-### Python
-
-```python
-from elo import ELO  # adjust the import to match your file layout
-
-rating = ELO(k_factor=32, c_value=400, l_factor=16)
-
-# Outcome only: 0 = draw, 1 = player A won, 2 = player B won
-new_a, new_b = rating.elo(1400.0, 1550.0, 1)
-print(new_a, new_b)  # ≈ 1422.5, 1527.5
-
-# With points scored (method 2 is the default)
-new_a, new_b = rating.elo_with_points(1400.0, 1550.0, 5, 1, method=2)
-```
-
-### Java
 
 ```java
 ELO rating = new ELO(32, 400, 16); // adjust to match your package layout
 
 // Outcome only: 0 = draw, 1 = player A won, 2 = player B won
 double[] result = rating.elo(1400.0, 1550.0, 1);
+// result ≈ { 1422.5, 1527.5 }
 
-// With points scored
+// With points scored (method 2 is the default)
 double[] scored = rating.elo_with_points(1400.0, 1550.0, 5, 1, 2);
 ```
 
 > [!NOTE]
-> Class and package names in these snippets are illustrative. Adjust the imports to match where the `ELO` class lives in your project.
+> The class and package names here are illustrative. Adjust them to match where the `ELO` class lives in your project.
 
 ## 📚 API Reference
 
@@ -86,9 +68,9 @@ Updates ratings using **only the match outcome**.
 | `rating_b` | float | Current rating of player B |
 | `outcome` | int | `0` = draw · `1` = A won · `2` = B won |
 
-**Returns:** the new ratings as a tuple/array of floats, e.g. `(1400.0, 1550.0)`.
+**Returns:** the new ratings as an array of floating-point numbers, e.g. `{1400.0, 1550.0}`.
 
-### `elo_with_points(rating_a, rating_b, points_a, points_b, method=2)`
+### `elo_with_points(rating_a, rating_b, points_a, points_b, method)`
 
 Updates ratings while **also considering the points scored** by each player.
 
@@ -100,7 +82,7 @@ Updates ratings while **also considering the points scored** by each player.
 | `points_b` | float | Points scored by player B |
 | `method` | int | `0` = outcome only · `1` = points fraction replaces `S_a` · `2` = bonus using `L` (default) |
 
-**Returns:** the new ratings as a tuple/array of floats.
+**Returns:** the new ratings as an array of floating-point numbers.
 
 ## 🧮 How It Works
 
@@ -182,10 +164,7 @@ With method 2, the maximum rating change per match is $K + L$.
 
 ## 🗂️ Dependencies
 
-| Language | Dependencies |
-|---|---|
-| Python | None |
-| Java | None |
+None. The library uses only the Java standard library.
 
 ## 🤝 Contributing
 
@@ -197,9 +176,7 @@ Contributions are welcome and appreciated.
 4. Push the branch: `git push origin feature/your-feature`
 5. Open a Pull Request
 
-Good first contributions: unit tests, additional language ports, packaging for PyPI or Maven, and usage examples.
-
-When changing behavior, keep the **Python and Java implementations in sync**.
+Good first contributions: unit tests (e.g. JUnit), Maven or Gradle packaging, and usage examples.
 
 ## 🐛 Reporting Issues
 
